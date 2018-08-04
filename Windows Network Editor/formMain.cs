@@ -59,11 +59,15 @@ namespace Windows_Network_Editor {
                     }
 
                     using (var rkey = hklm.OpenSubKey(NetworkSettingsAddr, true)) {
-                        rkey.DeleteSubKeyTree(profile.Guid);
+                        try {
+                            rkey.DeleteSubKeyTree(profile.Guid);
+                        } catch { }
                     }
 
                     using (var rkey = hklm.OpenSubKey(ProbeAddr, true)) {
-                        rkey.DeleteSubKeyTree(profile.Guid.ToLower());
+                        try {
+                            rkey.DeleteSubKeyTree(profile.Guid.ToLower());
+                        } catch { }
                     }
 
                     using (var rkey = hklm.OpenSubKey(ManagedSignaturesAddr, true)) {
