@@ -120,11 +120,13 @@ namespace Windows_Network_Editor {
         }
 
         private void buttonEdit_Click(object sender, EventArgs e) {
-            var profile = listboxNetwork.Items[listboxNetwork.SelectedIndex] as NetworkProfile;
-            using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)) {
-                using (var rkey = hklm.OpenSubKey(NetworkProfilesAddr + "\\" + profile.Guid, true)) {
-                    rkey.SetValue(ProfileNameValue, textName.Text.Trim());
-                    rkey.SetValue(DescriptionValue, textDescription.Text.Trim());
+            foreach (var item in listboxNetwork.SelectedItems) {
+                var profile = item as NetworkProfile;
+                using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)) {
+                    using (var rkey = hklm.OpenSubKey(NetworkProfilesAddr + "\\" + profile.Guid, true)) {
+                        rkey.SetValue(ProfileNameValue, textName.Text.Trim());
+                        rkey.SetValue(DescriptionValue, textDescription.Text.Trim());
+                    }
                 }
             }
 
